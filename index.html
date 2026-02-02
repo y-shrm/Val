@@ -10,10 +10,10 @@
 
   <style>
     :root {
-      --bg1: #ffd6e7;
-      --bg2: #ffeef6;
+      --bg1: #a3285b;
+      --bg2: #dc7da9;
       --card: #ffffffcc;
-      --yes: #ff3b7a;
+      --yes: #ea185a;
       --yesHover: #ff1f68;
     }
 
@@ -39,7 +39,9 @@
       pointer-events: none;
       z-index: 9999;
     }
-
+    #firstGif { max-height: 200px; /* adjust this value to fit nicely */ width: auto; /* keeps aspect ratio */ display: block; margin: 0 auto; /* centers it */ }
+    #secondgif { max-height: 370px; /* adjust this value to fit nicely */ width: auto; /* keeps aspect ratio */ display: block; margin: 0 auto; /* centers it */ }
+    body { margin: 0; padding: 0; min-height: 100vh; display: block; /* instead of flex */ overflow-y: auto; /* ensures vertical scrolling */ }
     .card {
       width: min(720px, 92vw);
       padding: 26px 22px;
@@ -48,6 +50,7 @@
       border-radius: 22px;
       text-align: center;
       box-shadow: 0 18px 60px rgba(0,0,0,.15);
+      
     }
 
     .art {
@@ -101,8 +104,10 @@
 
     .hint {
       margin-top: 10px;
-      font-size: 13px;
+      font-size: 18px;
       opacity: .7;
+      font-weight: bold;
+      
     }
 
     .result {
@@ -115,6 +120,15 @@
       font-size: clamp(30px, 4.5vw, 46px);
       margin: 10px 0;
     }
+    .fade-in {
+  opacity: 0;
+  transition: opacity 1.5s ease-in;
+}
+
+.fade-in.show {
+  opacity: 1;
+}
+
 
     .fireworks {
       width: min(380px, 90vw);
@@ -134,7 +148,7 @@
 
   <main class="card">
     <!-- ANIMAL WITH HEART -->
-    <svg class="art" viewBox="0 0 320 240" xmlns="http://www.w3.org/2000/svg">
+    <img id="firstGif" class="art" viewBox="0 0 320 240" src="https://media.tenor.com/PfRW1cmW1PQAAAAi/dudu-hearts-gif.gif">
       <defs>
         <linearGradient id="fur" x1="0" x2="1">
           <stop offset="0" stop-color="#f7c7a1"/>
@@ -171,7 +185,7 @@
             fill="#ff7aa2"/>
     </svg>
 
-    <h1>Simran will you be my valentine?</h1>
+    <h1 id="mainTitle">Will you be my valentine Simran?</h1>
 
     <section class="button-zone" id="zone">
       <button id="yesBtn">Yes</button>
@@ -179,13 +193,14 @@
     </section>
 
     <!-- HINT -->
-    <div class="hint" id="hint">“No” seems a bit shy 😈</div>
+    <div class="hint" id="hint">“No” seems a bit shy 😈</strong></div>
 
     <section class="result" id="result">
       <h2>YAY! 🎉</h2>
       <img
+        id = "secondgif"
         class="fireworks"
-        src="https://media.giphy.com/media/26ufdipQqU2lhNA4g/giphy.gif"
+        src="https://media.tenor.com/rkZe2fpDISoAAAAi/bubu.gif"
         alt="Fireworks"
       />
     </section>
@@ -197,6 +212,7 @@
     const noBtn = document.getElementById("noBtn");
     const result = document.getElementById("result");
     const hint = document.getElementById("hint");
+    
 
     /* ---------- CONFETTI ---------- */
     const confettiCanvas = document.getElementById("confettiCanvas");
@@ -251,6 +267,8 @@
     }
 
     /* ---------- NO BUTTON RUNS AWAY ---------- */
+    let moveCount = 0; // add this line at the top of the section 
+    let textAdded = false; // flag so text only appears once
     function clamp(n, min, max) {
       return Math.max(min, Math.min(max, n));
     }
@@ -276,7 +294,16 @@
       noBtn.style.transform = "none";
 
       growYes();
+      moveCount++;
+      if (moveCount === 70 && !textAdded) { 
+        const extraText = document.createElement("span"); 
+        extraText.textContent = "Still trying 🙄"; 
+        extraText.style.marginLeft = "10px"; 
+        extraText.style.color = "Black";
+         hint.appendChild(extraText); 
+         textAdded = true;
     }
+  }
 
     zone.addEventListener("pointermove", e => {
       const b = noBtn.getBoundingClientRect();
@@ -290,15 +317,41 @@
     noBtn.addEventListener("click", e => e.preventDefault());
 
     /* ---------- YES CLICK ---------- */
-    yesBtn.addEventListener("click", () => {
-      zone.style.display = "none";
-      hint.style.display = "none";     // HIDE THE HINT
-      result.style.display = "block";
-      resizeConfettiCanvas();
-      fullScreenConfetti();
-    });
+    // helper function for typing effect
+function typeText(element, text, speed = 100) {
+  element.textContent = "";
+  let i = 0;
+  const interval = setInterval(() => {
+    element.textContent += text[i];
+    i++;
+    if (i === text.length) clearInterval(interval);
+  }, speed);
+}
+
+yesBtn.addEventListener("click", () => {
+  zone.style.display = "none";
+  hint.style.display = "none";     // HIDE THE HINT
+  result.style.display = "block";
+
+  // remove the first gif
+  const firstGif = document.getElementById("firstGif"); 
+  if (firstGif) {
+    firstGif.remove();
+  }
+
+  // typing effect on the main title
+  const mainTitle = document.getElementById("mainTitle");
+  if (mainTitle) {
+    typeText(mainTitle, "Best choice ever... I’m so lucky ", 100);
+  }
+
+  // confetti AFTER typing finishes
+  setTimeout(() => {
+    resizeConfettiCanvas();
+    fullScreenConfetti();
+  }, "Simran, you are my forever Valentine ❤️".length * 100 + 500);
+});
+
   </script>
 </body>
 </html>
-
-
