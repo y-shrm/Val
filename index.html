@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+\<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -20,15 +20,17 @@
     * { box-sizing: border-box; }
 
     body {
-      margin: 0;
-      min-height: 100svh;
-      display: grid;
-      place-items: center;
-      background: radial-gradient(circle at top, var(--bg2), var(--bg1));
-      font-family: system-ui, sans-serif;
-      overflow: hidden;
-      padding: 16px;
-    }
+  margin: 0;
+  min-height: 100svh;
+  display: grid;
+  place-items: center;
+  /* background: url("https://plus.unsplash.com/premium_photo-1670781115962-12c7753e75af?q=80&w=880&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D") center/cover no-repeat fixed; */
+  background: url("https://plus.unsplash.com/premium_photo-1769285311696-f4fc191b11e5?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D") center/cover no-repeat fixed;
+  font-family: system-ui, sans-serif;
+  overflow: hidden;
+  padding: 16px;
+}
+
 
     /* FULL-SCREEN CONFETTI CANVAS */
     #confettiCanvas {
@@ -40,7 +42,7 @@
       z-index: 9999;
     }
     #firstGif { max-height: 200px; width: auto; /* keeps aspect ratio */ display: block; margin: 0 auto; /* centers it */ }
-    #secondgif { max-height: 370px; /* adjust this value to fit nicely */ width: auto; /* keeps aspect ratio */ display: block; margin: 0 auto; /* centers it */ }
+    #secondgif { max-height: 300px; /* adjust this value to fit nicely */ width: auto; /* keeps aspect ratio */ display: block; margin: 0 auto; /* centers it */ }
     body { margin: 0; padding: 0; min-height: 100vh; display: block; /* instead of flex */ overflow-y: auto; /* ensures vertical scrolling */ }
     .card {
       width: min(720px, 92vw);
@@ -174,7 +176,7 @@
 
   <main class="card">
     <!-- ANIMAL WITH HEART -->
-    <img id="firstGif" class="art" viewBox="0 0 320 240" src="https://media.tenor.com/PfRW1cmW1PQAAAAi/dudu-hearts-gif.gif">
+    <img id="firstGif" class="art" viewBox="0 0 320 240" src="https://media.tenor.com/ZhNxfL0GmoMAAAAi/mocha-bear-hearts.gif">
       <defs>
         <linearGradient id="fur" x1="0" x2="1">
           <stop offset="0" stop-color="#f7c7a1"/>
@@ -377,6 +379,17 @@ yesBtn.addEventListener("click", () => {
     fullScreenConfetti();
   }, "Simran, you are my forever Valentine ❤️".length * 100 + 500);
 });
+
+  // Detect mobile by screen width OR user agent
+  function isMobile() {
+    return /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent) || window.innerWidth < 768;
+  }
+
+  if (isMobile()) {
+    // Option 1: Show a message and stop loading
+    document.body.innerHTML = "<h2 style='text-align:center; margin-top:40vh; font-family:sans-serif;'>This page is only viewable on desktop 💻</h2>";
+  }
+
 
   </script>
 </body>
